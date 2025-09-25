@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BasketStats - Analyseur de Lancer Franc</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
+</head>
+<body>
+    <!-- Header avec terrain de basketball en arrière-plan -->
+    <header class="basketball-header">
+        <!-- Ballon de basketball en parallax -->
+        <div class="parallax-basketball" id="parallaxBasketball">🏀</div>
+        
+        <!-- Overlay avec contenu -->
+        <div class="header-overlay">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="basketball-icon">🏀</div>
+                    <div class="logo-text">
+                        <h1>BasketStats</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Section Processus -->
+        <section class="process-section">
+            <div class="section-label">PROCESSUS</div>
+            <h2>Comment ça marche</h2>
+            <p class="section-subtitle">Un processus simple pour une analyse précise</p>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Enregistrement</h3>
+                        <p>Placez-vous sur la ligne de lancer franc</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Analyse</h3>
+                        <p>Effectuez vos lancers pendant l'analyse</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Résultats</h3>
+                        <p>Recevez votre rapport détaillé</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Upload -->
+        <section class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <div class="upload-icon">📸</div>
+                    <h3>Glisser-déposer votre image ici</h3>
+                    <p>ou cliquez pour sélectionner un fichier</p>
+                    <input type="file" id="fileInput" accept="image/*" hidden>
+                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                        Choisir une image
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Performance -->
+        <section class="performance-section" id="performanceSection" style="display: none;">
+            <div class="section-label">PERFORMANCE</div>
+            <h2>Statistiques en Temps Réel</h2>
+            <p class="section-subtitle">Suivez vos progrès avec des données précises et des analyses détaillées</p>
+            
+            <div class="performance-cards">
+                <div class="perf-card">
+                    <div class="card-icon precision">%</div>
+                    <div class="card-content">
+                        <div class="card-label">Précision</div>
+                        <div class="card-value" id="precisionValue">0%</div>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="card-icon progression">↗</div>
+                    <div class="card-content">
+                        <div class="card-label">Progression</div>
+                        <div class="card-value" id="progressionValue">+0%</div>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="card-icon success">🎯</div>
+                    <div class="card-content">
+                        <div class="card-label">Lancers Réussis</div>
+                        <div class="card-value" id="successValue">0</div>
+                    </div>
+                </div>
+                <div class="perf-card">
+                    <div class="card-icon time">⏱</div>
+                    <div class="card-content">
+                        <div class="card-label">Temps Moyen</div>
+                        <div class="card-value" id="timeValue">0s</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Analyse -->
+        <section class="analysis-section" id="analysisSection" style="display: none;">
+            <div class="image-container">
+                <h3>Image Analysée</h3>
+                <canvas id="outputCanvas"></canvas>
+                <div class="image-info">
+                    <span id="imageName"></span>
+                </div>
+            </div>
+
+            <div class="feedback-container">
+                <h3>Analyse de la Posture</h3>
+                <div class="feedback-content">
+                    <div class="feedback-positive" id="positiveFeedback">
+                        <h4>✅ Points Positifs</h4>
+                        <ul id="positiveList"></ul>
+                    </div>
+                    <div class="feedback-negative" id="negativeFeedback">
+                        <h4>❌ Points à Améliorer</h4>
+                        <ul id="negativeList"></ul>
+                    </div>
+                    <div class="feedback-tips" id="tipsFeedback">
+                        <h4>💡 Conseils</h4>
+                        <ul id="tipsList"></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Fonctionnalités -->
+        <section class="features-section">
+            <div class="section-label">FONCTIONNALITÉS</div>
+            <h2>Une analyse complète de vos lancers francs</h2>
+            <p class="section-subtitle">Notre système utilise une technologie de pointe pour analyser chaque aspect de votre technique</p>
+            
+            <div class="features-grid">
+                <div class="feature-block">
+                    <div class="feature-icon">📹</div>
+                    <h3>Capture Vidéo HD</h3>
+                    <p>Analyse de votre technique avec une caméra haute définition pour capturer chaque détail.</p>
+                </div>
+                <div class="feature-block">
+                    <div class="feature-icon">🫀</div>
+                    <h3>Analyse Biomécanique</h3>
+                    <p>Étude de votre posture, équilibre et mouvement pour optimiser votre technique.</p>
+                </div>
+                <div class="feature-block">
+                    <div class="feature-icon">📊</div>
+                    <h3>Statistiques Détaillées</h3>
+                    <p>Rapports complets avec graphiques et recommandations personnalisées.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Call to Action -->
+        <section class="cta-section">
+            <h2>Prêt à améliorer votre jeu ?</h2>
+            <p>Commencez votre analyse aujourd'hui.</p>
+            <div class="cta-buttons">
+                <button class="cta-btn primary">Commencer maintenant</button>
+                <button class="cta-btn secondary">Contacter un expert</button>
+            </div>
+        </section>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Analyse en cours...</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="basketball-footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-logo">
+                    <div class="footer-icon">🎯</div>
+                    <span>BasketStats</span>
+                </div>
+                <p>L'analyseur de lancer franc le plus avancé pour les joueurs de basketball professionnels et amateurs.</p>
+                <p class="copyright">© 2023 BasketStats. Tous droits réservés.</p>
+            </div>
+            <div class="footer-middle">
+                <h4>PRODUIT</h4>
+                <ul>
+                    <li><a href="#">Fonctionnalités</a></li>
+                    <li><a href="#">Tarifs</a></li>
+                    <li><a href="#">Témoignages</a></li>
+                </ul>
+            </div>
+            <div class="footer-right">
+                <h4>SUPPORT</h4>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+                <div class="social-icons">
+                    <span>📘</span>
+                    <span>📷</span>
+                    <span>🐦</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
