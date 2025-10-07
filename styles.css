@@ -34,6 +34,7 @@ a, button, input, .upload-area, .cta-btn {
 }
 
 /* Ballon de basketball en parallax */
+
 .parallax-basketball {
     position: fixed;
     top: 50%;
@@ -42,18 +43,19 @@ a, button, input, .upload-area, .cta-btn {
     height: 50vw;
     max-width: 600px;
     max-height: 600px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><circle cx="200" cy="200" r="190" fill="%23FF6B35" stroke="%23000" stroke-width="8"/><path d="M200 20c-99.5 0-180 80.5-180 180s80.5 180 180 180 180-80.5 180-180-80.5-180-180-180zm0 20c88.4 0 160 71.6 160 160s-71.6 160-160 160S40 288.4 40 200 111.6 40 200 40z" fill="%23000"/><path d="M20 200c0-99.5 80.5-180 180-180v360c-99.5 0-180-80.5-180-180z" fill="none" stroke="%23000" stroke-width="6"/><path d="M380 200c0 99.5-80.5 180-180 180V20c99.5 0 180 80.5 180 180z" fill="none" stroke="%23000" stroke-width="6"/><path d="M200 60c-77.3 0-140 62.7-140 140s62.7 140 140 140 140-62.7 140-140-62.7-140-140-140z" fill="none" stroke="%23000" stroke-width="4"/><path d="M60 200c0-77.3 62.7-140 140-140v280c-77.3 0-140-62.7-140-140z" fill="none" stroke="%23000" stroke-width="4"/><path d="M340 200c0 77.3-62.7 140-140 140V60c77.3 0 140 62.7 140 140z" fill="none" stroke="%23000" stroke-width="4"/></svg>');
-    background-size: cover;
+    background-image: url('https://samvernet.github.io/basketball/images1/—Pngtree—vibrant basketball showcasing classic design_18842149.png');
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     z-index: 1;
-    opacity: 0.4;
+    opacity: 0.9;
     animation: rotate 30s linear infinite;
     transition: transform 0.1s ease-out;
     pointer-events: none;
     border-radius: 50%;
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
+
 
 @keyframes rotate {
     from {
@@ -836,3 +838,4 @@ h2 {
     font-weight: bold;
 
 }
+
