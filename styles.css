@@ -38,7 +38,7 @@ a, button, input, .upload-area, .cta-btn {
 .parallax-basketball {
     position: fixed;
     top: 50%;
-    right: -25%;
+    right: 10%;
     width: 50vw;
     height: 50vw;
     max-width: 600px;
@@ -838,4 +838,5 @@ h2 {
     font-weight: bold;
 
 }
+
 
