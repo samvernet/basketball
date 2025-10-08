@@ -121,7 +121,7 @@ a, button, input, .upload-area, .cta-btn {
 
 .logo-text p {
     color: white;
-    font-size: 0.9rem;
+    font-size: 2rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -838,5 +838,6 @@ h2 {
     font-weight: bold;
 
 }
+
 
 
